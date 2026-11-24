@@ -8,4 +8,5 @@ public final class Constants {
     public final static String INVALID_LINE_SKIPPING = "Invalid interval. Skipping line ";
     public final static String LOADED_FILE = "Loaded file: ";
     public final static String RECORDS_LOADED = "Records loaded.";
+    public final static String TIMESTAMP_FORMAT = "HH:mm:ss.SSS";
 }
