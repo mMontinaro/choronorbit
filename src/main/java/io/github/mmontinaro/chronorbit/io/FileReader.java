@@ -5,10 +5,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import io.github.mmontinaro.chronorbit.cli.InputConfig;
 import io.github.mmontinaro.chronorbit.common.Constants;
 import io.github.mmontinaro.chronorbit.model.Interval;
+import io.github.mmontinaro.chronorbit.model.enums.TimestampFormat;
 
 public class FileReader {
 
@@ -18,14 +21,17 @@ public class FileReader {
         }
     }
 
-    public static List<Interval> read(Path path) throws IOException{
+    public static List<Interval> read(Path path, InputConfig config) throws IOException{
         try(Stream<String> lines = Files.lines(path)){
-            return lines.map(FileReader::parseLine).toList();
+            if(config.timestampFormat() != TimestampFormat.TIMESTAMP){
+                throw new UnsupportedOperationException("TODO");
+            }
+            return lines.map(line -> parseLine(line, config)).toList();
         }
     }
 
-    private static Interval parseLine(String line){
-        String[] timestamps = line.split(",", -1);
+    private static Interval parseLine(String line, InputConfig config){
+        String[] timestamps = line.split(Pattern.quote(config.delimiter()), -1);
 
         if(timestamps.length != 2){
             throw new IllegalArgumentException(Constants.INVALID_LINE_SKIPPING + line);

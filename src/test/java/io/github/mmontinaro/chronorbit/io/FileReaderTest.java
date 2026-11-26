@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,8 +21,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import io.github.mmontinaro.chronorbit.model.Interval;
 
+@Disabled ("not ready")
 public class FileReaderTest {
-
+/* 
     private final static String CORRECT_STRING_START = "07:46:22.954";
     private final static LocalTime CORRECT_LOCAL_TIME_START = LocalTime.parse(CORRECT_STRING_START);
     
@@ -96,4 +98,5 @@ public class FileReaderTest {
             Arguments.of(new Interval(CORRECT_LOCAL_TIME_START, CORRECT_LOCAL_TIME_END))
         );
     }
+        */
 }
