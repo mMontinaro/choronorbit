@@ -11,6 +11,13 @@ import io.github.mmontinaro.chronorbit.common.Constants;
 import io.github.mmontinaro.chronorbit.model.Interval;
 
 public class FileReader {
+
+    public static void checkPathExists(Path path) throws IOException{
+        if(!Files.isRegularFile(path) || !Files.isReadable(path)){
+            throw new IOException(path.toString());
+        }
+    }
+
     public static List<Interval> read(Path path) throws IOException{
         try(Stream<String> lines = Files.lines(path)){
             return lines.map(FileReader::parseLine).toList();
