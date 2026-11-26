@@ -3,6 +3,7 @@ package io.github.mmontinaro.chronorbit;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.stream.Stream;
 
 import io.github.mmontinaro.chronorbit.common.Constants;
 import io.github.mmontinaro.chronorbit.io.FileReader;
@@ -21,6 +22,7 @@ public class ChronorbitMain {
 
         try{
             Path path = Path.of(args[0]);
+            FileReader.checkPathExists(path);
             List<Interval> intervals = FileReader.read(path);
             System.out.println(Constants.LOADED_FILE + path.getFileName());
             System.out.println(intervals.size() + " " + Constants.RECORDS_LOADED);
@@ -36,9 +38,5 @@ public class ChronorbitMain {
             System.err.println(Constants.INVALID_FILE_PATH);
             System.exit(1);
         } 
-        // catch(Exception e){
-        //     System.err.println(e);
-        //     System.exit(1);
-        // } 
     }
 }

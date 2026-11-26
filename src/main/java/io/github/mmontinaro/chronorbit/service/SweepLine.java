@@ -43,7 +43,7 @@ public class SweepLine {
 
             } else {
                 if(count == max){
-                    solutions.add(new Solution(max, startRange, end.get(ePointer)));
+                    solutions.add(new Solution(max, new Interval(startRange, end.get(ePointer))));
                     startRange = null;
                 }
                 ++ePointer;

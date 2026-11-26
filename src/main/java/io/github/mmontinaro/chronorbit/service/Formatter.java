@@ -10,8 +10,8 @@ public class Formatter {
 
     public String format(Solution solution){
         return "%s-%s;%d".formatted(
-            solution.startTimeRange().format(FORMATTER),
-            solution.endTimeRange().format(FORMATTER),
+            solution.interval().start().format(FORMATTER),
+            solution.interval().end().format(FORMATTER),
             solution.maxSatellites()
         );
     }
