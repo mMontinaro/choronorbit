@@ -40,7 +40,7 @@ public class InteractiveMenu {
                 case "2":
                     return TimestampFormat.CCSDS_ASCII_TIME_CODE_A;
                 default:
-                    println(Constants.Cli.INVALID_SELECTION)
+                    println(Constants.Cli.INVALID_SELECTION);
                     println("");
             }
         }

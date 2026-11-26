@@ -16,7 +16,7 @@ public final class Constants {
     public final static class Cli{
         public final static String ENTER_SELECTION = "Enter Selection => ";
         public final static String INVALID_SELECTION = "Invalid Selection. Try again.";
-        public final static String ENTER_DELIM = "Enter Delimiter of choice => ";
+        public final static String ENTER_DELIM = "Enter Delimiter of choice (default: ',') => ";
         public final static String INVALID_DELIM = "Forbidden Delimiter. Delimiter cannot be part of selected Time Format";
 
         public final static String INIT_STRING = """
