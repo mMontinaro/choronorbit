@@ -1,0 +1,1 @@
+Orekit = dependecy for AbsoluteDate, explicitly supports ccsds ascii codes, compatible with sweep line algorithm --- too beefy of a dependency just for date comparison, but interesting to dive into, maybe in a future release

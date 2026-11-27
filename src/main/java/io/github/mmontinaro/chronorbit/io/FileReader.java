@@ -1,6 +1,7 @@
 package io.github.mmontinaro.chronorbit.io;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalTime;
@@ -10,6 +11,7 @@ import java.util.stream.Stream;
 
 import io.github.mmontinaro.chronorbit.cli.InputConfig;
 import io.github.mmontinaro.chronorbit.constants.Constants;
+import io.github.mmontinaro.chronorbit.error.UnableToReadException;
 import io.github.mmontinaro.chronorbit.model.Interval;
 import io.github.mmontinaro.chronorbit.model.enums.TimestampFormat;
 
@@ -21,12 +23,16 @@ public class FileReader {
         }
     }
 
-    public static List<Interval> read(Path path, InputConfig config) throws IOException{
+    public static <T extends Comparable<? super T>> List<Interval<T>> read(
+        Path path, 
+        InputConfig config,
+        TimeCodec codec
+    //TODO add the codec
+    ) throws IOException{
         try(Stream<String> lines = Files.lines(path)){
-            if(config.timestampFormat() != TimestampFormat.TIMESTAMP){
-                throw new UnsupportedOperationException("TODO");
-            }
-            return lines.map(line -> parseLine(line, config)).toList();
+            return readLines(lines, config, codec) lines.map(line -> parseLine(line, config)).toList();
+        } catch(UncheckedIOException e){
+            throw new UnableToReadException();
         }
     }
 
@@ -37,7 +43,8 @@ public class FileReader {
             throw new IllegalArgumentException(Constants.INVALID_LINE_SKIPPING + line);
         }
 
-        return new Interval(
+        // TODO cannot remain local time, need to create a generic class that can handle everything, a dictionary or codex, OR a codec since it transforms and parses
+        return new Interval<>(
             LocalTime.parse(timestamps[0]), // start
             LocalTime.parse(timestamps[1])  // end
         );
