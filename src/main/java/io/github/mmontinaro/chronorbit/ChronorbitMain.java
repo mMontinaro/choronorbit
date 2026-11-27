@@ -7,7 +7,8 @@ import java.util.Scanner;
 
 import io.github.mmontinaro.chronorbit.cli.InputConfig;
 import io.github.mmontinaro.chronorbit.cli.InteractiveMenu;
-import io.github.mmontinaro.chronorbit.common.Constants;
+import io.github.mmontinaro.chronorbit.constants.CliConstants;
+import io.github.mmontinaro.chronorbit.constants.Constants;
 import io.github.mmontinaro.chronorbit.io.FileReader;
 import io.github.mmontinaro.chronorbit.model.Interval;
 import io.github.mmontinaro.chronorbit.model.Solution;
@@ -17,6 +18,12 @@ import io.github.mmontinaro.chronorbit.service.SweepLine;
 public class ChronorbitMain {
     public static void main(String[] args) {
 
+        if(args.length == 1 && args[0].equalsIgnoreCase(CliConstants.HELP_ARG) || args[0].equalsIgnoreCase(CliConstants.HELP_H_ARG)){
+            InteractiveMenu menu = new InteractiveMenu(new Scanner(System.in), System.err);
+            menu.help();
+            return;
+        }
+        
         boolean isInteractive = (args.length == 2) && args[1].equals("--interactive");
         if(args.length != 1 && !isInteractive){
             System.err.println(Constants.ARG_NUM_INVALID);

@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import io.github.mmontinaro.chronorbit.cli.InputConfig;
-import io.github.mmontinaro.chronorbit.common.Constants;
+import io.github.mmontinaro.chronorbit.constants.Constants;
 import io.github.mmontinaro.chronorbit.model.Interval;
 import io.github.mmontinaro.chronorbit.model.enums.TimestampFormat;
 

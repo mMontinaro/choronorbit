@@ -1,9 +1,10 @@
 package io.github.mmontinaro.chronorbit.cli;
 
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
-import io.github.mmontinaro.chronorbit.common.Constants;
+import io.github.mmontinaro.chronorbit.constants.CliConstants;
 import io.github.mmontinaro.chronorbit.model.enums.TimestampFormat;
 
 public class InteractiveMenu {
@@ -24,15 +25,28 @@ public class InteractiveMenu {
 
     }
 
+    public void help(){
+    
+        displayHelp(
+            CliConstants.HELP_STRING.replace(
+                "%s", 
+                this.buildDynamicHelpMsg()
+            ));
+    }
+
 
     private void displayInit(){
-        println(Constants.Cli.INIT_STRING);
+        println(CliConstants.INIT_STRING);
+    }
+
+    private void displayHelp(String msg){
+        println(msg);
     }
 
     private TimestampFormat selectTimeFormat(){
         while(true){
-            println(Constants.Cli.SELECT_TIME_FORMAT);
-            print(Constants.Cli.ENTER_SELECTION);
+            println(CliConstants.SELECT_TIME_FORMAT);
+            print(CliConstants.ENTER_SELECTION);
 
             switch(scanner.nextLine().strip()){
                 case "", "1":
@@ -40,7 +54,7 @@ public class InteractiveMenu {
                 case "2":
                     return TimestampFormat.CCSDS_ASCII_TIME_CODE_A;
                 default:
-                    println(Constants.Cli.INVALID_SELECTION);
+                    println(CliConstants.INVALID_SELECTION);
                     println("");
             }
         }
@@ -48,7 +62,7 @@ public class InteractiveMenu {
 
     private String selectDelim(TimestampFormat format){
         while(true){
-            print(Constants.Cli.ENTER_DELIM);
+            print(CliConstants.ENTER_DELIM);
 
             String delim = scanner.nextLine().strip();
 
@@ -60,7 +74,7 @@ public class InteractiveMenu {
                 return delim;
             }
 
-            println(Constants.Cli.INVALID_DELIM + " " + format.getForbiddenDelims());
+            println(CliConstants.INVALID_DELIM + " " + format.getForbiddenDelims());
 
         }
     }
@@ -71,5 +85,36 @@ public class InteractiveMenu {
 
     private void print(String msg){
         printStream.print(msg);
+    }
+
+    private String buildDynamicHelpMsg(){
+        StringBuilder fullMsg = new StringBuilder();
+        String line; 
+
+        String pattern = this.buildTimestampPattern();
+        
+        for(TimestampFormat f : TimestampFormat.values()){
+
+            line = pattern.formatted(f.getFormat(), f.getPattern(), f.getForbiddenDelims());
+            fullMsg = fullMsg.append(line);
+        }
+
+        return fullMsg.toString();
+    }
+
+    private String buildTimestampPattern(){
+        int maxLengthFormat = Arrays.stream(TimestampFormat.values())
+            .mapToInt(format -> format.getFormat().length())
+            .max()
+            .orElse(0);
+
+        int maxLengthPattern = Arrays.stream(TimestampFormat.values())
+            .mapToInt(format -> format.getPattern().length())
+            .max()
+            .orElse(0);
+
+        return "    %-" + (maxLengthFormat + 4)
+                        + "s%-" + (maxLengthPattern + 4) 
+                        + "s%s%n";
     }
 }

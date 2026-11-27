@@ -1,13 +1,13 @@
 package io.github.mmontinaro.chronorbit.cli;
 
-import io.github.mmontinaro.chronorbit.common.Constants;
+import io.github.mmontinaro.chronorbit.constants.TimeConstants;
 import io.github.mmontinaro.chronorbit.model.enums.TimestampFormat;
 
 public record InputConfig(TimestampFormat timestampFormat, String delimiter) {
 
     public InputConfig{
         if(!timestampFormat.isValidDelim(delimiter)){
-            throw new IllegalArgumentException(Constants.INVALID_DELIMITER);
+            throw new IllegalArgumentException(TimeConstants.ForbiddenDelims.INVALID_DELIMITER);
         }
     }
 
